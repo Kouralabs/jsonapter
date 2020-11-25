@@ -71,6 +71,7 @@ The following are the list of all keys that have special meaning in template obj
 - [`existsUnless`](#existsUnless)
 - [`dataTransform`](#dataTransform)
 - [`default`](#default)
+- [`nullable`](#nullable)
 - [`multiple`](#multiple)
 - [`single`](#single)
 - [`firstOf`](#firstOf)
@@ -1069,6 +1070,36 @@ console.log(r3); // {last: 'unknown', first: 'JOE', title: 'MR'}
 
 ```
 
+<a name="nullable" />
+#### `nullable` rule
+
+This rule can be used to preserve null values in output. Normally null values
+are stripped out of the output.
+
+```js
+var template = {
+    content: {
+        first: {
+            dataKey: 'givenName'
+        },
+        last: {
+            dataKey: 'familyName',
+            nullable: true
+        }
+    }
+};
+
+var r0 = j2j.run(template, {
+    familyName: 'DOE',
+    givenName: 'JOE'
+});
+console.log(r0); // {last: 'DOE', first: 'JOE'}
+
+var r1 = j2j.run(template, {
+    givenName: 'JOE'
+});
+console.log(r1); // {last: null, first: 'JOE'}
+```
 
 <a name="multiple" />
 #### `multiple` rule
